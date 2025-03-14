@@ -6,11 +6,10 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.Test;
 import static org.testng.Assert.*;
+
 public class SwagLabsTest {
 
     @Test
-
-
     public void testSwagLabs() throws InterruptedException {
 
         WebDriver driver = new ChromeDriver();
@@ -59,6 +58,20 @@ public class SwagLabsTest {
         String secondItemText = secondItem.getText();
         assertEquals(secondItemText, "Sauce Labs Fleece Jacket");
 
+        String firstPrice = driver.findElement
+                (By.xpath("//a[@id='item_4_title_link']/following-sibling::div[2]/div")).getText();
+        firstPrice = firstPrice.substring(1);
+
+        assertEquals(firstPrice, "29.99");
+        double firstPriceDouble = Double.parseDouble(firstPrice);
+
+        String secondString = driver.findElement
+                (By.xpath("//a[@id='item_5_title_link']/following-sibling::div[2]/div")).getText();
+        secondString = secondString.substring(1);
+
+        assertEquals(secondString, "49.99");
+        double secondPriceDouble = Double.parseDouble(secondString);
+
         driver.findElement(By.xpath("//button[@id='checkout']")).click();
 
         driver.findElement(By.xpath("//input[@id='first-name']")).sendKeys("Poopa");
@@ -69,8 +82,23 @@ public class SwagLabsTest {
         assertEquals(driver.findElement(By.xpath("//div[@data-test='shipping-info-value']"))
                 .getText(), "Free Pony Express Delivery!");
 
+
+        double tax = (firstPriceDouble + secondPriceDouble) * 0.08;
+        double totalPriceWithTax = firstPriceDouble + secondPriceDouble + tax;
+        double totalPriceWithoutTax = firstPriceDouble + secondPriceDouble;
+
+        double roundedTax = Math.round(tax * 100.0) / 100.0;
+        double roundedPriceWithTax = Math.round(totalPriceWithTax * 100.0) / 100.0;
+        double roundedPriceWithoutTax = Math.round(totalPriceWithoutTax * 100.0) / 100.0;
+
+        assertEquals(driver.findElement(By.xpath("//div[@class='summary_subtotal_label']"))
+                .getText(), "Item total: $" + roundedPriceWithoutTax);
+
+        assertEquals(driver.findElement(By.xpath("//div[@class='summary_tax_label']"))
+                .getText(), "Tax: $" + roundedTax + "0");
+
         assertEquals(driver.findElement(By.xpath("//div[@data-test='total-label']")).
-                getText(), "Total: $86.38");
+                getText(), "Total: $" + roundedPriceWithTax);
 
         driver.findElement(By.xpath("//button[@id='finish']")).click();
 
@@ -82,8 +110,7 @@ public class SwagLabsTest {
         assertEquals(driver.findElement
                 (By.xpath("//div[@class='app_logo']")).getText(), "Swag Labs");
 
-
-        Thread.sleep(5000);
+        Thread.sleep(2000);
 
         driver.quit();
     }
