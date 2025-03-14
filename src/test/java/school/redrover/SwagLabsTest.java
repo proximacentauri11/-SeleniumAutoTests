@@ -28,7 +28,8 @@ public class SwagLabsTest {
         WebElement loginButton = driver.findElement(By.id("login-button"));
         loginButton.click();
 
-        WebElement backpack = driver.findElement(By.id("add-to-cart-sauce-labs-backpack"));
+        WebElement backpack = driver.findElement
+                (By.id("add-to-cart-sauce-labs-backpack"));
         backpack.click();
 
         WebElement removeBackpack = driver.findElement
@@ -38,7 +39,8 @@ public class SwagLabsTest {
         String color = removeBackpack.getCssValue("border");
         assertEquals(color, "1px solid rgb(226, 35, 26)");
 
-        WebElement cart = driver.findElement(By.xpath("//span[@class='shopping_cart_badge']"));
+        WebElement cart = driver.findElement
+                (By.xpath("//span[@class='shopping_cart_badge']"));
         String cartSize = cart.getText();
         assertEquals(cartSize, "1");
 
@@ -50,23 +52,27 @@ public class SwagLabsTest {
 
         cart.click();
 
-        WebElement firstItem = driver.findElement(By.xpath("//a[@id='item_4_title_link']/div"));
+        WebElement firstItem = driver.findElement
+                (By.xpath("//a[@id='item_4_title_link']/div"));
         String firstItemText = firstItem.getText();
         assertEquals(firstItemText, "Sauce Labs Backpack");
 
-        WebElement secondItem = driver.findElement(By.xpath("//a[@id='item_5_title_link']/div"));
+        WebElement secondItem = driver.findElement
+                (By.xpath("//a[@id='item_5_title_link']/div"));
         String secondItemText = secondItem.getText();
         assertEquals(secondItemText, "Sauce Labs Fleece Jacket");
 
         String firstPrice = driver.findElement
-                (By.xpath("//a[@id='item_4_title_link']/following-sibling::div[2]/div")).getText();
+                (By.xpath("//a[@id='item_4_title_link']/following-sibling::div[2]/div")).
+                getText();
         firstPrice = firstPrice.substring(1);
 
         assertEquals(firstPrice, "29.99");
         double firstPriceDouble = Double.parseDouble(firstPrice);
 
         String secondString = driver.findElement
-                (By.xpath("//a[@id='item_5_title_link']/following-sibling::div[2]/div")).getText();
+                (By.xpath("//a[@id='item_5_title_link']/following-sibling::div[2]/div")).
+                getText();
         secondString = secondString.substring(1);
 
         assertEquals(secondString, "49.99");
@@ -74,14 +80,17 @@ public class SwagLabsTest {
 
         driver.findElement(By.xpath("//button[@id='checkout']")).click();
 
-        driver.findElement(By.xpath("//input[@id='first-name']")).sendKeys("Poopa");
-        driver.findElement(By.xpath("//input[@id='last-name']")).sendKeys("Loopa");
-        driver.findElement(By.xpath("//input[@id='postal-code']")).sendKeys("322228");
-        driver.findElement(By.xpath("//input[@id='continue']")).click();
+        driver.findElement(By.xpath("//input[@id='first-name']")).
+                sendKeys("Poopa");
+        driver.findElement(By.xpath("//input[@id='last-name']")).
+                sendKeys("Loopa");
+        driver.findElement(By.xpath("//input[@id='postal-code']")).
+                sendKeys("322228");
+        driver.findElement(By.xpath("//input[@id='continue']")).
+                click();
 
         assertEquals(driver.findElement(By.xpath("//div[@data-test='shipping-info-value']"))
                 .getText(), "Free Pony Express Delivery!");
-
 
         double tax = (firstPriceDouble + secondPriceDouble) * 0.08;
         double totalPriceWithTax = firstPriceDouble + secondPriceDouble + tax;
@@ -97,18 +106,21 @@ public class SwagLabsTest {
         assertEquals(driver.findElement(By.xpath("//div[@class='summary_tax_label']"))
                 .getText(), "Tax: $" + roundedTax + "0");
 
-        assertEquals(driver.findElement(By.xpath("//div[@data-test='total-label']")).
-                getText(), "Total: $" + roundedPriceWithTax);
+        assertEquals(driver.findElement(By.xpath("//div[@data-test='total-label']"))
+                .getText(), "Total: $" + roundedPriceWithTax);
 
-        driver.findElement(By.xpath("//button[@id='finish']")).click();
+        driver.findElement(By.xpath("//button[@id='finish']")).
+                click();
 
         assertEquals(driver.findElement
                 (By.xpath("//h2")).getText(), "Thank you for your order!");
 
-        driver.findElement(By.xpath("//button[@id='back-to-products']")).click();
+        driver.findElement(By.xpath("//button[@id='back-to-products']")).
+                click();
 
         assertEquals(driver.findElement
-                (By.xpath("//div[@class='app_logo']")).getText(), "Swag Labs");
+                (By.xpath("//div[@class='app_logo']")).
+                getText(), "Swag Labs");
 
         Thread.sleep(2000);
 
