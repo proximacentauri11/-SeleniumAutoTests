@@ -10,7 +10,7 @@ public class SwagLabsTest {
 
     @Test
 
-    public void testSwagLabsNewBranch() throws InterruptedException {
+    public void testSwagLabsBranchOne() throws InterruptedException {
         WebDriver driver = new ChromeDriver();
 
         driver.get("https://www.saucedemo.com");
@@ -80,8 +80,8 @@ public class SwagLabsTest {
         assertEquals(driver.findElement
                 (By.xpath("//div[@class='app_logo']")).getText(), "Swag Labs");
 
-        driver.navigate().back();
 
+        System.out.println("Branch 1");
 
         Thread.sleep(5000);
 
