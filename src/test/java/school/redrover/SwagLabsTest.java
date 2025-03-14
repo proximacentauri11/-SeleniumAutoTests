@@ -11,7 +11,7 @@ public class SwagLabsTest {
     @Test
 
 
-    public void testSwagLabsBranchOne222() throws InterruptedException {
+    public void testSwagLabs() throws InterruptedException {
 
         WebDriver driver = new ChromeDriver();
 
@@ -81,10 +81,6 @@ public class SwagLabsTest {
 
         assertEquals(driver.findElement
                 (By.xpath("//div[@class='app_logo']")).getText(), "Swag Labs");
-
-
-
-        System.out.println("Branch 111");
 
 
         Thread.sleep(5000);
